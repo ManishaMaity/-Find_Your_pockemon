@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <title>Pokemon</title>
+    <link rel="icon" href=
+"logo.png"
+type="image/x-icon">
+  </head>
+  <body class="bg-danger" >
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+      <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+      Pokemon
+    </a>
+    <a class="navbar-brand" href="#" style="display: flex;">
+      <!-- <img src="clock-logo.jpg" width="30" height="30" class="d-inline-block align-top" alt=""> -->
+      <div id="demotime"></div>
+    </a>
+  </nav>
+
+  <div class="container mt-5" >
+    <div class="jumbotron ">
+      <div style="display: flex; justify-content: center;">
+        <img src="logo.png" width="80" height="80" alt="">
+      </div>
+
+  <h1 class="display-4 text-center">Pokemon</h1>
+  
+  <p class="lead text-center">Find Pokemon...</p>
+  <div style="display: flex; justify-content: center;">
+    <input type="text" name="" id="demo" style="border-radius: 15px; height: 50px;width: 300px;">
+    <button type="button" class="btn btn-danger btn-lg ml-5" onclick="pokemongo()" style="border-radius: 15px;">Find</button>
+  </div>
+  <hr class="my-4">
+  <div class="container d-flex justify-content-center"  id="pokemonimg">
+  
+    
+  </div>
+</div>
+  </div>
+
+
+  <script>
+    setInterval(function () {
+        let time = new Date();
+        let hour1 = time.getHours();
+        let minute1 = time.getMinutes();
+        let second1 = time.getSeconds();
+
+        let deside = "Pm";
+        if (hour1 < 12) {
+          deside = "Am";
+        }
+
+        let hour12 = 0;
+        if (hour1 > 12) {
+          hour12 = hour1 - 12;
+        } else {
+          hour12 = hour1;
+        }
+        let d = `${hour12}:${minute1}:${second1}  ${deside}`;
+        document.getElementById("demotime").innerHTML = d;
+      }, 1000);
+
+    function pokemongo(){
+
+      let pokemonna=document.getElementById('demo').value
+let pokemonname=pokemonna.toLowerCase();
+      fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonname}`)
+      .then(function(data){
+        return(data.json())
+      })
+      .then(function(dataget){
+        let datapokemon=dataget.sprites.front_default
+        document.getElementById('pokemonimg').innerHTML=`<img src="${datapokemon}" width="250" alt="" style="display: flex; justify-content: center;align-content: center;align-items: center;" >`;
+        console.log(datapokemon)
+
+      })
+      .catch(function(err){
+        console.log("The eror is "+err)
+        document.getElementById('pokemonimg').innerHTML="Enter Correct name..."
+      })
+      console.log(pokemonname)
+    }
+
+  </script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+  </body>
+</html>
